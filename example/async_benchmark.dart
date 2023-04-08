@@ -1,4 +1,4 @@
-import 'package:benchmark_runner/src/benchmark_runner.dart';
+import 'package:benchmark_runner/benchmark_runner.dart';
 
 class FutureDelayBenchmark extends AsyncBenchmark<void> {
   @override
