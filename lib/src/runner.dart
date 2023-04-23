@@ -1,9 +1,16 @@
 part of benchmark_runner;
 
+class BenchmarkIteration<T extends Benchmark> {
+  final T benchmark;
+
+  BenchmarkIteration({required this.benchmark});
+}
+
 class BenchmarkRunner {
-  Future<BenchmarkResult<T>> runAsync<T>(
-    AsyncBenchmark<T> benchmark, {
-    int iterations = 1,
+  const BenchmarkRunner();
+
+  Future<BenchmarkResult<T>> runAsync<T>({
+    required List<AsyncBenchmark<T>> benchmarks,
   }) async {
     final values = <T>[];
 
@@ -15,12 +22,12 @@ class BenchmarkRunner {
 
     var memory = 0;
 
-    for (var i = 0; i < iterations; i++) {
+    for (var i = 0; i < benchmarks.length; i++) {
       stopwatch.start();
 
       memory = ProcessInfo.currentRss;
 
-      final value = await benchmark.run();
+      final value = await benchmarks[i].run();
 
       stopwatch.stop();
 
@@ -30,7 +37,7 @@ class BenchmarkRunner {
       times.add(stopwatch.elapsedMicroseconds);
       memories.add(memory);
 
-      if (i < iterations - 1) {
+      if (i < benchmarks.length - 1) {
         stopwatch.reset();
       }
     }
@@ -51,9 +58,8 @@ class BenchmarkRunner {
     );
   }
 
-  BenchmarkResult<T> runSync<T>(
-    SyncBenchmark<T> benchmark, {
-    int iterations = 1,
+  BenchmarkResult<T> runSync<T>({
+    required List<SyncBenchmark<T>> benchmarks,
   }) {
     final values = <T>[];
 
@@ -65,12 +71,12 @@ class BenchmarkRunner {
 
     var memory = 0;
 
-    for (var i = 0; i < iterations; i++) {
+    for (var i = 0; i < benchmarks.length; i++) {
       stopwatch.start();
 
       memory = ProcessInfo.currentRss;
 
-      final value = benchmark.run();
+      final value = benchmarks[i].run();
 
       stopwatch.stop();
 
@@ -80,7 +86,7 @@ class BenchmarkRunner {
       times.add(stopwatch.elapsedMicroseconds);
       memories.add(memory);
 
-      if (i < iterations - 1) {
+      if (i < benchmarks.length - 1) {
         stopwatch.reset();
       }
     }
