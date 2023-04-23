@@ -1,24 +1,20 @@
 import 'package:benchmark_runner/benchmark_runner.dart';
 
-class ListAddBenchmark extends SyncBenchmark<void> {
+class ListAddAllThreeDotsBenchmark extends SyncBenchmark<void> {
   final List<int> other;
 
-  ListAddBenchmark(this.other);
+  ListAddAllThreeDotsBenchmark(this.other);
 
   @override
   void run() {
-    final list = <int>[];
-
-    for (var i = 0; i < other.length; i++) {
-      list.add(other[i]);
-    }
+    <int>[...other];
   }
 }
 
 void main() {
   const runner = BenchmarkRunner();
 
-  final benchmark = ListAddBenchmark(
+  final benchmark = ListAddAllThreeDotsBenchmark(
     List.generate(1000000, (index) => index),
   );
 

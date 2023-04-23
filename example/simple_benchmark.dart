@@ -15,14 +15,14 @@ class SimpleBenchmark extends SyncBenchmark<int> {
 }
 
 void main() {
-  final runner = BenchmarkRunner();
+  const runner = BenchmarkRunner();
 
   final benchmark = SimpleBenchmark(
     first: 1,
     second: 2,
   );
 
-  final result = runner.runSync(benchmark);
+  final result = runner.runSync(benchmarks: [benchmark]);
 
   print(result);
 }

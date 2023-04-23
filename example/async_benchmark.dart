@@ -6,11 +6,11 @@ class FutureDelayBenchmark extends AsyncBenchmark<void> {
 }
 
 void main() async {
-  final runner = BenchmarkRunner();
+  const runner = BenchmarkRunner();
 
   final benchmark = FutureDelayBenchmark();
 
-  final result = await runner.runAsync(benchmark);
+  final result = await runner.runAsync(benchmarks: [benchmark]);
 
   print(result);
 }

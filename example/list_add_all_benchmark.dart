@@ -14,11 +14,13 @@ class ListAddAllBenchmark extends SyncBenchmark<void> {
 }
 
 void main() {
-  final runner = BenchmarkRunner();
+  const runner = BenchmarkRunner();
 
-  final benchmark = ListAddAllBenchmark(List.generate(1000, (index) => index));
+  final benchmark = ListAddAllBenchmark(
+    List.generate(1000000, (index) => index),
+  );
 
-  final result = runner.runSync(benchmark);
+  final result = runner.runSync(benchmarks: [benchmark]);
 
-  print(result);
+  print(result.time.microseconds);
 }
